@@ -23,7 +23,10 @@ while ~(eof(lun)) do begin
    endif
    
    fields = strsplit(input, ' ', /extract)
-   stub.time = fields[0]+'T'+fields[1]
+   ; Re-order since JPL is now weird...
+   date = strsplit(fields[0], '-', /extract)
+   date = date[2]+'-'+date[1]+'-'+date[0]
+   stub.time = date+' '+fields[1]
    stub.raj2000 = float(fields[2])
    stub.decj2000 = float(fields[3])
    stub.np_ang = float(fields[4])
