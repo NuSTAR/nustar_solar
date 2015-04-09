@@ -46,7 +46,10 @@ pro combine_events, obs_list
         endfor
      endfor
      
-     mwrfits, all_evt, outfile, evth, /create   
-     return
-     
-  end
+  ENDFOR
+  mwrfits, all_evt, outfile, evth, /create   
+  return
+
+
+
+END

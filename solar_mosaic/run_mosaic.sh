@@ -3,8 +3,8 @@
 source $NUSTARSETUP
 
 if [ $# != 2 ] ; then
-    echo Syntax:  ./run_mosaic.sh <listfile> <outfile>
-    <outfile> should be something like: nustar_solar_20141101.evt
+    echo Syntax: " ./run_mosaic.sh <listfile> <outfile>"
+    echo outfile should be something like: nustar_solar_20141101.evt
     exit 1
 fi
 
