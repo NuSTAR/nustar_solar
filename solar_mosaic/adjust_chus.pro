@@ -4,6 +4,8 @@ pro adjust_chus
   outfile = getenv('mosaic_outfile')
   prefix = file_dirname(outfile)+'/'+file_basename(outfile, '.evt')
 
+  all_evt = mrdfits(outfile, 1, evth)
+
   chufile = prefix+'_chu.sav'
   corrfile = prefix+'_corr.evt'
 
