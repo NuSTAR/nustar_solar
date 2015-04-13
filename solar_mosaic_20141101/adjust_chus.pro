@@ -26,15 +26,18 @@ pro adjust_chus
 ; Uncomment the lines below and add others for whatever chu
 ; combination you have if you want to use ds9 to look for alignment
 ; issues.
-  
-;; inrange = where(chu_comb eq 13)
-;; this_evt = all_evt[inrange]
-;; outfile = file_basename(infile, '.evt')+'_chuselect13.evt'
-;; mwrfits, this_evt, outfile, evth, /create   
-;inrange = where(chu_comb eq 14)
-;this_evt = all_evt[inrange]
-;; outfile = file_basename(infile, '.evt')+'_chuselect123.evt'
-;; mwrfits, this_evt, outfile, evth, /create   
+
+;; chu_list = [1, 4, 9, 5, 10, 13, 14]
+;; FOR i = 0, n_elements(chu_list) - 1 DO BEGIN
+;;    inrange = where(chu_comb EQ chu_list[i], nfound)
+
+;;    IF nfound GT 0 THEN begin
+;;       this_evt = all_evt[inrange]
+;;       thisout = file_basename(outfile,'.evt')+'_chuselect'+string(chu_list[i], format = '(i0)')+'.evt'
+;;       mwrfits, this_evt, thisout, evth, /create   
+;;    ENDIF 
+
+;; ENDFOR
 
 
 ; Here's an example (for AR2912) of how to apply an adjustment
