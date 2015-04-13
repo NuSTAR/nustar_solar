@@ -1,11 +1,11 @@
 The code in this tree can be used to convert from "standard" SKY
 coordinates to heliocentric coordinates.
 
-Things are set up specifically to convert the AR2192 data set.
+Things are set up specifically to convert the AR2222 data set.
 
 The scheme is the following:
 
-- Read in th ephemeris from an ASCII file (included for AR2912) to
+- Read in th ephemeris from an ASCII file (included for AR2222) to
   determine the solar position/NP angle as a function of time.
 
 - Read in a cleaned event file from the data directory.
