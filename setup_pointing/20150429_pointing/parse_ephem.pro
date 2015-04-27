@@ -1,7 +1,7 @@
 pro parse_ephem
 
 ;  infile = 'sun_ephemeris.txt'
-  infile = '20150427_solar_ephem.txt'
+  infile = '20150429_solar_ephem.txt'
   openr, lun, infile, /get_lun
   stub = {jd:double(0), ra:0., dec:0., pa:0.}
   while ~eof(lun) do begin
