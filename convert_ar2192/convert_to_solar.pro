@@ -42,11 +42,12 @@ xr = ra0 + (evt.x - x0)*delx/cos(dec0/180.0d0*!dpi) ; imperfect correction for c
 tmjd = convert_nustar_time(evt.time, /mjd)
 
 
-; Jupiter ephemeris
-;save, ut, nustar_time, ra, dec, file = 'ephem.sav'
-restore, 'ephem.sav'
 ephem = read_ephem('ar2192_ephem.txt')
-nustar_time = convert_nustar_time(ephem.time)
+
+
+nustar_time = convert_nustar_time(ephem.time, /from_ut)
+
+
 ra = ephem.raj2000
 dec = ephem.decj2000
 pa = ephem.np_ang
@@ -55,7 +56,7 @@ pa = ephem.np_ang
 xs = interpol(ra, nustar_time, evt.time)
 ys = interpol(dec, nustar_time, evt.time)
 p0 = interpol(pa, nustar_time, evt.time)
-p0 = p0 / !dtor ; convert to radians for below.
+p0 = p0 * !dtor ; convert to radians for below.
 
 
 ; RA, dec offsets of photons from Sun center in arcsec
@@ -80,13 +81,11 @@ x0 = maxX / 2.
 y0 = maxY / 2.
 dely = dely * 3600. ; convert to arcsecond scales for AIA comparisons
 delx = delx * 3600. ; switch from West = left to West = right
+
+
+
 evt.x = (dxs / delx) + x0 
 evt.y = (dys / dely) + y0
-
-
-
-
-
 
 
 ; Adjust astrometry headers
