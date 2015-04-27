@@ -74,8 +74,8 @@ pro setup_pointing_orbit1
      printf, lun, 'box('+ $
              string(point_ra[i], format ='(d8.4)')+','+$
              string(point_dec[i],  format ='(d8.4)')+','+$
-             '720", 720", '+string(box_pa, format = '(d0.0)')+')'
-  ;; endfor
+             '720", 720", '+string(box_pa[i], format = '(d0.0)')+')'
+  ;; endfo
   ;; close, lun
   ;; free_lun, lun
   
@@ -84,11 +84,11 @@ pro setup_pointing_orbit1
   ;; printf, lun, 'global color=green dashlist=8 3 width=1 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1'
   ;; printf, lun, 'fk5'
 
-  printf, lun, 'circle('+ $
-          string(sun_ra[i], format ='(d8.4)')+','+$
-          string(sun_dec[i],  format ='(d8.4)')+','+$
-          '960.5"'+')'
-endfor
+     printf, lun, 'circle('+ $
+             string(sun_ra[i], format ='(d8.4)')+','+$
+             string(sun_dec[i],  format ='(d8.4)')+','+$
+             '960.5"'+')'
+  endfor
   
   close, lun
   free_lun, lun
@@ -107,7 +107,7 @@ endfor
      printf, lun, 'box('+ $
              string(point_ra[i], format ='(d8.4)')+','+$
              string(point_dec[i],  format ='(d8.4)')+','+$
-             '720", 720", '+string(box_pa, format = '(d0.0)')+')'
+             '720", 720", '+string(box_pa[i], format = '(d0.0)')+')'
 
 ;     close, lun
 ;     free_lun, lun
@@ -138,10 +138,13 @@ endfor
   close, lun
   free_lun, lun
 
+
+
+
   openw, lun, /get_lun, outstem+'_pointings_withsun_'+suffix+'.txt'
   for i = 0, n_elements(sun_ra) - 1 do begin
      this_time = convert_nustar_time(aim_times[i] - 2400000.5, /from_mjd, /ut)
-     printf, lun, this_time, point_ra[i], point_dec[i],sun_ra[i], sun_dec[i], format = '(A," ", 4d12.5)'
+     printf, lun, this_time, point_ra[i], point_dec[i],sun_ra[i], sun_dec[i],sun_pa[i], format = '(A," ", 5d12.5)'
   endfor
   close, lun
   free_lun, lun
