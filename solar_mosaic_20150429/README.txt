@@ -1,3 +1,6 @@
+# NOTE: This is currently a straight copy of the 20141211 mosaic
+# code and needs to be updated for the 20150429 data.
+
 The code in this tree can be used to mosaic several NuSTAR
 pointings.
 
