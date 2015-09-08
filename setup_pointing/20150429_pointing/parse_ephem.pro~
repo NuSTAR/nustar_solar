@@ -10,9 +10,9 @@ pro parse_ephem
      fields = strsplit(input, ' ', /extract)
      stub.jd = double(fields[2])
      
-     stub.ra = float(fields[4])
-     stub.dec = float(fields[5])
-     stub.pa = float(fields[6])
+     stub.ra = float(fields[3])
+     stub.dec = float(fields[4])
+     stub.pa = float(fields[5])
      push, ephem, stub
   endwhile
   save, ephem, file = 'sun_ephemeris.sav'

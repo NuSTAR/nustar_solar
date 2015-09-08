@@ -1,22 +1,26 @@
-pro setup_pointing_orbit1
+pro setup_pointing_orbit2
 
                                 ; Orbit 1 start:
 
-  tstart_orb1 = '2015-04-29T10:50:00'
-  tend_orb1 = '2015-04-29T11:52:00'
+  tstart_orb1 = '2015-04-29T12:27:00'
+  tend_orb1 = '2015-04-29T13:29:00'
 
   outstem = '20150429'
-  suffix='orbit1'
+  suffix='orbit2'
+
+  reverse_mosaic = 1
+
   tstart_sec = convert_nustar_time(tstart_orb1, /from_ut)
   tend_sec = convert_nustar_time(tend_orb1, /from_ut)
 
   tiles = 16.
-  dwell = (double((tend_sec - tstart_sec) / 16.))[0]
+  dwell = (double((tend_sec - tstart_sec) / tiles))[0]
  
   print, dwell
 
 
   tstart_jd = convert_nustar_time(tstart_orb1, /from_ut, /mjd) + 2400000.5
+
 
 
   restore, 'sun_ephemeris.sav'
@@ -28,6 +32,8 @@ pro setup_pointing_orbit1
 
   print, convert_nustar_time(max(aim_times) - 2400000.5+dwell, /from_mjd, /ut)
 
+
+
   
   
   sun_ra = interpol(ephem.ra, ephem.jd, aim_times)
@@ -37,12 +43,21 @@ pro setup_pointing_orbit1
 
 
   
-  
-  xsteps = findgen(tiles) mod 4 - 1.5
+
+
   xsteps = [-1.5, -0.5, 0.5, 1.5]
 
   xsteps = [xsteps, reverse(xsteps), xsteps, reverse(xsteps)]
   ysteps = floor(findgen(16) / 4) - 1.5 
+
+
+  if reverse_mosaic then begin
+     xsteps = reverse(xsteps)
+     ysteps = reverse(ysteps)
+  endif
+
+
+
 
   
 
@@ -137,6 +152,15 @@ endfor
   endfor
   close, lun
   free_lun, lun
+
+  openw, lun, /get_lun, outstem+'_steps_'+suffix+'.txt'
+  for i = 0, n_elements(sun_ra) - 1 do begin
+     this_time = convert_nustar_time(aim_times[i] - 2400000.5, /from_mjd, /ut)
+     printf, lun, this_time, xsteps[i] * (10/60.) * 3600., ysteps[i]*(10/60.)*3600., format = '(A, " ", 2d12.5)'
+  endfor
+  close, lun
+  free_lun, lun
+
 
   openw, lun, /get_lun, outstem+'_pointings_withsun_'+suffix+'.txt'
   for i = 0, n_elements(sun_ra) - 1 do begin
