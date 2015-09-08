@@ -1,4 +1,4 @@
-pro parse_sun_center, infile
+pro parse_sun_center, infile, west=west
 
   openr, lun, /get_lun, infile
 
@@ -35,6 +35,11 @@ pro parse_sun_center, infile
   dr = sqrt(x^2. + y^2.) * 3600.
   x *= 3600.
   y *= 3600.
+
+  x = fix(round(x))
+  y = fix(round(y))
+
+  if keyword_set(west) then x *= -1 
   for i = 0, n_elements(rapos) - 1 do begin
      print, date[i], ' ', time[i], x[i], y[i]
   endfor

@@ -48,9 +48,13 @@ pro setup_pointing_orbit1
 
   pa = (sun_pa + 135) mod 360
                                 ; Roll angle to get "diamond" shape
-
   box_pa = pa
   pa = box_pa + 45 ; Offset to get the step in the right direction
+
+
+  print, box_pa[0]
+
+
   
   delx = xsteps * cos(pa * !dtor) - ysteps * sin(pa*!dtor)
   dely = xsteps * sin(pa * !dtor) + ysteps * cos(pa*!dtor)
