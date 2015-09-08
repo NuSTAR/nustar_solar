@@ -1,2 +1,5 @@
 Ephemeris is from JPL Horizons.
-Right now the setup_orbit*pro files are out of date.
+
+The various setup*pro files show the pointing strategy.
+
+
