@@ -2,7 +2,7 @@ pro parse_ephem
 
   infile = '20150901_solar_ephem.txt'
   openr, lun, infile, /get_lun
-  stub = {jd:double(0), ra:0., dec:0., pa:0.}
+  stub = {jd:double(0), ra:0., dec:0., pa:0., rad:0}
   while ~eof(lun) do begin
      input = 'string'
      readf, lun, input
@@ -12,6 +12,7 @@ pro parse_ephem
      stub.ra = float(fields[3])
      stub.dec = float(fields[4])
      stub.pa = float(fields[5])
+     stub.rad = float(fields[6])
      push, ephem, stub
   endwhile
   save, ephem, file = 'sun_ephemeris.sav'

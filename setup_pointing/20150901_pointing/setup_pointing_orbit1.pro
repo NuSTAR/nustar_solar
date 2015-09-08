@@ -2,18 +2,18 @@ pro setup_pointing_orbit1
 
                                 ; Orbit 1 start:
 
-  tstart_orb1 = '2015-04-29T10:50:00'
-  tend_orb1 = '2015-04-29T11:52:00'
+  tstart_orb1 = '2015-09-01T02:10:40'
+  tend_orb1 = '2015-09-01T03:12:00'
 
-  outstem = '20150429'
+  outstem = '20150901'
   suffix='orbit1'
   tstart_sec = convert_nustar_time(tstart_orb1, /from_ut)
   tend_sec = convert_nustar_time(tend_orb1, /from_ut)
 
   tiles = 16.
-  dwell = (double((tend_sec - tstart_sec) / 16.))[0]
+  dwell = (double((tend_sec - tstart_sec) / tiles))[0]
  
-  print, dwell
+  print, 'Time per tile: ',  dwell
 
 
   tstart_jd = convert_nustar_time(tstart_orb1, /from_ut, /mjd) + 2400000.5
@@ -26,10 +26,9 @@ pro setup_pointing_orbit1
   dwell /= 86400.               ; days
   aim_times = dindgen(tiles) * dwell + tstart_jd[0]
 
-  print, convert_nustar_time(max(aim_times) - 2400000.5+dwell, /from_mjd, /ut)
+  print, 'Time for last dwell: ', convert_nustar_time(max(aim_times) - 2400000.5+dwell, /from_mjd, /ut)
 
-  
-  
+   
   sun_ra = interpol(ephem.ra, ephem.jd, aim_times)
   sun_dec = interpol(ephem.dec, ephem.jd, aim_times)
   sun_pa = interpol(ephem.pa, ephem.jd, aim_times)
@@ -44,16 +43,19 @@ pro setup_pointing_orbit1
   xsteps = [xsteps, reverse(xsteps), xsteps, reverse(xsteps)]
   ysteps = floor(findgen(16) / 4) - 1.5 
 
+;  xsteps = [xsteps, 0]
+;  ysteps = [ysteps, 0]
+
   
 
   pa = (sun_pa + 135) mod 360
                                 ; Roll angle to get "diamond" shape
+
+
   box_pa = pa
-  pa = box_pa + 45 ; Offset to get the step in the right direction
+  pa = box_pa + 45 ; Offset to get the steps in the right direction
 
-  print, box_pa[0]
-
-
+  print, 'Box PA angle:', box_pa[0]
   
   delx = xsteps * cos(pa * !dtor) - ysteps * sin(pa*!dtor)
   dely = xsteps * sin(pa * !dtor) + ysteps * cos(pa*!dtor)
