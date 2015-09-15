@@ -1,0 +1,106 @@
+;; -*- mode: emacs-lisp; coding: emacs-mule; -*-
+;; --------------------------------------------------------------------------
+;; Desktop File for Emacs
+;; --------------------------------------------------------------------------
+;; Created Mon Sep 14 16:00:26 2015
+;; Desktop file format version 206
+;; Emacs version 23.3.1
+
+;; Global section:
+(setq desktop-missing-file-warning nil)
+(setq tags-file-name nil)
+(setq tags-table-list nil)
+(setq search-ring '("stop" "found" "ma" "delx" "rsub" "fovmrdfits" "fov" "indir" "outdir" "accepted" "accepte" "dc_out" "evtah" "pihigh" "pighigh" "pihi"))
+(setq regexp-search-ring nil)
+(setq register-alist nil)
+(setq file-name-history '("~/lif2/bwgref/git/nustar_solar/solar_align_20141101/nustar_solar_alignment_20012004001.pro" "~/lif2/bwgref/git/nustar_solar/solar_align_20141101/nustar_solar_alignment_20012003001.pro" "~/lif2/bwgref/git/nustar_solar/solar_align_20141101/nustar_solar_alignment_20012002001.pro" "~/lif2/bwgref/git/nustar_solar/util/nustar_split_chufiles.pro" "~/lif2/bwgref/git/nustar_solar/util_ssw/compile.list" "~/lif2/bwgref/git/nustar_solar/util_ssw/nustar_align_tile.pro" "~/lif2/bwgref/git/nustar_solar/util_ssw/nustar_offset_dbase_gen.pro" "~/lif2/bwgref/git/nustar_solar/util_ssw/nustar_align_tile.pro" "~/lif2/bwgref/git/nustar_solar/util/nustar_split_chufiles.pro" "~/lif2/bwgref/git/nustar_solar/solar_align_20141101/nustar_plot_map.pro" "~/lif2/bwgref/git/nustar_solar/solar_align_20141101/nustar_combine_maps.pro" "~/lif2/bwgref/git/nustar_solar/solar_align_20141101/nustar_plot_map.pro" "~/lif2/bwgref/git/nustar_solar/solar_align_20141101/plot_map_cb_igh.pro" "~/lif2/bwgref/git/nustar_solar/solar_align_20141101/nustar_make_map_obj.pro" "~/lif2/bwgref/git/nustar_solar/solar_align_20141101/nustar_plot_map.pro" "~/lif_git/nustar_solar/solar_align_20141101/nustar_combine_maps.pro" "~/lif2/bwgref/git/nustar_solar/solar_align_20141101/nustar_make_map_obj.pro" "~/lif_git/nustar_solar/solar_align_20141101/nustar_convert_to_solar.pro" "~/lif_git/nustar_solar/solar_align_20141101/nustar_make_map_obj.pro" "~/lif2/bwgref/git/nustar_solar/solar_align_20141101/nustar_correct_file.pro" "~/lif2/bwgref/git/nustar_solar/solar_align_20141101/nustar_align_tile.pro" "~/lif2/bwgref/git/nustar_solar/solar_align_20141101/nustar_make_map_obj.pro" "~/lif2/bwgref/git/nustar_solar/solar_align_20141101/nustar_align_tile.pro" "~/lif_git/nustar_solar/solar_align_20141101/nustar_correct_file.pro" "~/lif2/bwgref/git/nustar_solar/solar_align_20141101/nustar_plot_map.pro" "~/lif_git/nustar_solar/util/nustar_map_centroid.pro" "~/lif_git/nustar_solar/util/map_centroid.pro" "~/lif_git/nustar_solar/util/nustar_make_submap.pro" "~/lif_git/nustar_solar/util/make_submap.pro" "~/lif_git/nustar_solar/util/make_submap.pro "))
+
+;; Buffer section -- buffers listed in same order as in buffer list:
+(desktop-create-buffer 206
+  "/users/bwgref/lif2/bwgref/git/nustar_solar/solar_align_20141101/nustar_solar_alignment_20012004001.pro"
+  "nustar_solar_alignment_20012004001.pro"
+  'idlwave-mode
+  '(auto-fill-mode abbrev-mode)
+  4075
+  '(2716 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-file-coding-system . undecided-unix) (case-fold-search)))
+
+(desktop-create-buffer 206
+  "/users/bwgref/lif2/bwgref/git/nustar_solar/util/nustar_split_chufiles.pro"
+  "nustar_split_chufiles.pro"
+  'idlwave-mode
+  '(auto-fill-mode abbrev-mode)
+  503
+  '(281 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-file-coding-system . undecided-unix) (case-fold-search)))
+
+(desktop-create-buffer 206
+  "/users/bwgref/lif2/bwgref/git/nustar_solar/util_ssw/nustar_align_tile.pro"
+  "nustar_align_tile.pro"
+  'idlwave-mode
+  '(auto-fill-mode abbrev-mode)
+  2425
+  '(nil nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-file-coding-system . undecided-unix) (case-fold-search)))
+
+(desktop-create-buffer 206
+  "/users/bwgref/lif2/bwgref/git/nustar_solar/solar_align_20141101/nustar_solar_alignment_20001003001.pro"
+  "nustar_solar_alignment_20001003001.pro"
+  'idlwave-mode
+  '(auto-fill-mode abbrev-mode)
+  3859
+  '(3552 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-file-coding-system . undecided-unix) (case-fold-search)))
+
+(desktop-create-buffer 206
+  "/users/bwgref/lif2/bwgref/git/nustar_solar/util_ssw/compile.list"
+  "compile.list"
+  'text-mode
+  '(auto-fill-mode)
+  124
+  '(60 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . utf-8-unix)))
+
+(desktop-create-buffer 206
+  "/users/bwgref/idl/idl_lif.pro"
+  "idl_lif.pro"
+  'idlwave-mode
+  '(auto-fill-mode abbrev-mode)
+  274
+  '(180 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-file-coding-system . undecided-unix) (case-fold-search)))
+
+(desktop-create-buffer 206
+  "/users/bwgref/lif_nustar/sol/nsigh_nov14/make_maps_nov14_ar.pro"
+  "make_maps_nov14_ar.pro"
+  'idlwave-mode
+  '(auto-fill-mode abbrev-mode)
+  1474
+  '(1414 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-file-coding-system . undecided-unix) (case-fold-search)))
+
+(desktop-create-buffer 206
+  "/users/bwgref/.emacs"
+  ".emacs"
+  'emacs-lisp-mode
+  nil
+  262
+  '(6955 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix)))
+
