@@ -1,0 +1,1 @@
+0  0  20012003001  chu23  FPMA  2014-11-01T22:01:46.000  ./dat/nu20012003001A06_cl_ref_map_94.fits  maps/nu20012003001A06_cl_chu23_sunpos_map.fits
