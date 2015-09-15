@@ -1,0 +1,1 @@
+54  11  20001003001  chu123  FPMA  2014-11-01T18:52:16.000  ./dat/nu20001003001A06_cl_ref_map.fits  maps/nu20001003001A06_cl_chu123_sunpos_map.fits

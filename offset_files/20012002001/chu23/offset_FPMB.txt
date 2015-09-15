@@ -1,0 +1,1 @@
+25  23  20012002001  chu23  FPMB  2014-11-01T21:48:52.000  ./dat/nu20012002001A06_cl_ref_map.fits  maps/nu20012002001B06_cl_chu23_sunpos_map.fits
