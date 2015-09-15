@@ -14,9 +14,9 @@ pointing to track the Sun. Code is relatively straight forward to
 parse, but is mostly offered without additional README files since
 only super-pro users (BG and KKM) will probably use it.
 
-solar_align_YYYYMMDD:
+solar_alignment
 
-These directories contain the scripts needed to determine the
+This directories contain the scripts needed to determine the
 alignment between NuSTAR and the Sun. There is a more complete README
 file inside of each one of these directories that describes how things
 work and there are several "How To" IDL scripts that show how things
@@ -25,10 +25,15 @@ work.
 Intended mostly for pro users (BG, LG, IGH, AM), as this requires
 SSWIDL to run.
 
-solar_convert_YYYYMMDD:
+solar_convert:
 
-These directories should be usable with "vanilla" IDL, the AstroLib,
-Coyote Graphics Library, and nustar-idl. Will included instructions
-for what offsets to apply for each CHU offsets combination.
+This directories should be usable with "vanilla" IDL, the AstroLib,
+Coyote Graphics Library, and nustar-idl.
+
+offset_files:
+
+Directory tree that contains the offets for each of the sequence IDs
+and CHU combinations. Produced by the code in solar_alignment.
+
 
 
