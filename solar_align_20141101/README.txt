@@ -22,19 +22,67 @@ A separate directory for just "conversion" is in the works and will
 contain a similar walkthrough file that applies the chu-by-chu
 offsets to the event files.
 
+
+-----------------------------------------------------------------------
+
 Dependencies:
 
 - These scripts lean heavily on the astrolib, Coyote graphics library,
-  and the SSWIDL distrobution for accessing the AIA data and making an
-  manipulating map objects.
+  the nustar-idl distribution, and the SSWIDL distribution for
+  accessing the AIA data and making and manipulating map objects.
 
-
+-----------------------------------------------------------------------
 
 Inputs:
+
+--- Event files ---
 
 You need to have run the pipeline on the data at least once. In the
 walkthrough scripts you will neeed to adjust various paths to yoru
 files by hand.
+
+--- Solar Ephemeris ---
+
+You should go here to get the ephemeris:
+
+http://ssd.jpl.nasa.gov/horizons.cgi
+
+Ephemeris Type:
+          Observer
+
+Target Body:
+       Sol (Sun)
+
+Observer Location:
+     Geocentric
+
+Time Span:
+     Set appropriately for your obsrevation. I recommend getting the
+     entire day of your observation with a bit of time before/after.
+     I also recommend getting a sample at least every five
+     minutes. The code will interpolate this onto the actual event
+     times, but you might as well get a decent cadence at the beginning.
+
+
+Table Settings (the following should be checked):
+
+    Astrometric RA/DEC (Field 1)
+    North pole position angle and distance (Field 17)
+
+
+With the following settings for the Optional observer-table settings:
+
+     Date/time format: Calendar only (no Julian days).
+     Time Digits: Fractional Seconds
+
+
+You can either download the ephmeris directly from Horizons or copy
+and paste it into a text file. Note that the parser assumes that you
+copy the WHOLE ephemeris (not just the data) since it ignores the
+header information in the ephemeris and searchs for the $SOE and $EOE
+keywords in the file.
+
+-----------------------------------------------------------------------
 
 Outputs (default settings):
 
@@ -58,7 +106,7 @@ Direcotry contains the "map" objects produced here.
 Directory contains output figures (especially the figures showing the
 before/after the offset has been applied).
 
-
+-----------------------------------------------------------------------
 
 This code is provided "As Is". If you find a bug, let me know at
 bwgref@srl.caltech.edu
