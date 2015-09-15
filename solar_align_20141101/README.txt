@@ -1,83 +1,67 @@
-The code in this tree can be used to mosaic several NuSTAR
-pointings.
+The code in this tree can be used to convert NuSTAR files from RA/DEC
+coordinates to heliocentric coordinates. As written, the code will
+download a reference image (AIA 94A is hard coded for now, but this
+may be made more fleixble later on) and perform a cross-correlation
+between the NuSTAR image an the reference image.
 
-Note that this combines events from both FPMs and that in the current
-state it is not possible to determine from teh combined event file
-whether an event came from FPMA or FPMB.
+A walk-through file is provided in this directory. It can be run using
+the @file.pro formalism. I recommend doing it this way and
+uncommenting out various steps as you make sure that they work.
 
+Pre-requisite: You must already have the NuSTARDAS installed. There is
+a wrapper script here that calls the pipeline in a "solar friendly"
+way (turning off various filters to prevent a large fraction of real
+events from getting vetoed in the software).
 
-The scheme is the following:
+The alignment code here is intended for "pro" users (BG, LG, IGH, etc)
+who will perform the alignment. Eventually there will be a databse
+file distributed to all users that will contain the gold standard
+offsets for each solar observation. 
 
-- Combine the housekeeping files by simply merging together the HK
-  FITS files.
-
-- Generate a "CHU" output file, which tells you which combination of
-  startrackers the spacecraft bus was using as any particular time.
-
-- Read in and merge the heliocentric event files (e.g. those with a
-  "sunpos" in the suffix) into a single monolithic event file.
-
-  Notes: At this step the user can screen out "bad" pixels. Many of
-  the NuSTAR filters have to be turned off when processing the solar
-  data, so there are occasionally noisy pixels that can skew output
-  images. The current version is set to screen out known bad pixels
-  for the AR2192 (2014/11/01) observations, but this may need to be
-  checked for other solar pointings.
-
-  Notes II: At this stage a translation is added to the NuSTAR data
-  set to account for the lack of absolute position recosntruction in
-  the "SCIENCE_SC" mode where we use the spacecraft bus startrackers
-  to project the events onto the sky. Again, the shift currently in
-  the code was generated for the AR2912 (2014/11/01) data sets but may
-  not be valid for subsequent solar pointings.
-
-- "CHU"-dependent adjustment
-
-  We know that the NuSTAR bus has small misalignments in its iternal
-  attitude control system. This leads to small changes in the pointing
-  when switching between different combinations of spacecraft bus startrackers
-  (a.k.a "Camera Head Units" or "CHUs"). At this stage the user should
-  check to see which combinations of CHUs are present (by putting
-  break/stop statements in the code) and write out event files for
-  each CHU combination (there is commented-out example code showing
-  how to do this). These images produced by these files should be
-  inspected (in ds9, for example). There are places called out in the
-  code where additional translational shifts can be applied to
-  different CHU combinations to make all of the images line up.
+A separate directory for just "conversion" is in the works and will
+contain a similar walkthrough file that applies the chu-by-chu
+offsets to the event files.
 
 Dependencies:
 
-- These scripts lean heavily on the astrolib. If you check out the
-  nustar-idl git repo and make sure that these directories are in
-  your IDL !PATH then things should work.
+- These scripts lean heavily on the astrolib, Coyote graphics library,
+  and the SSWIDL distrobution for accessing the AIA data and making an
+  manipulating map objects.
+
 
 
 Inputs:
 
-<mosaic_infile.txt>
+You need to have run the pipeline on the data at least once. In the
+walkthrough scripts you will neeed to adjust various paths to yoru
+files by hand.
 
-This is a list of the observtions that you want to merge. The full
-path must be given, like this:
+Outputs (default settings):
 
-~/lif_nustar/sol/data/20001003_Sol_14305_AR2192
+./evt
 
-Note that all sequence IDs in this directory that have been converted
-to heliocentric coordinates will be merged.
+This directory will contain the products from running the pipeline
+using nupipeline to split the event files based on the GTIs produced
+by nustar_chu2gti.pro as well as the ancillary files.
 
-Outputs:
+./dat
 
-<mosaic_eventfile.evt>
+Directory contains the reference image and will also contain IDL SAVE
+files that will store the various offsets.
 
-This is the merged output file. The prefix (before .evt) will be used
-as the stem of the CHU and HK output files. This must end in ".evt".
+./maps
 
-Syntax:
+Direcotry contains the "map" objects produced here.
 
-./run_mosaic.sh mosaic_infile.txt mosaic.evt
+./figs
+
+Directory contains output figures (especially the figures showing the
+before/after the offset has been applied).
 
 
-The individual scripts should be fairly well commented in a "How to"
-kind of way". But if you have question/comments/bugs to: bwgref@srl.caltech.edu
+
+This code is provided "As Is". If you find a bug, let me know at
+bwgref@srl.caltech.edu
 
 
 
