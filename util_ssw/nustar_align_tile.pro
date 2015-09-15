@@ -3,11 +3,9 @@
 ;
 ; PURPOSE:	
 ;		Perform cross-correlation of one NuSTAR mosaic tile
-;		and a referenrce image to find
+;		and a reference image to find the
 ;		NuSTAR aspect correction for that tile.
 ;               
-;               (Out of date?) The AIA image should be a Level 1.5 image
-;		whose filename begins with 'AIA'.
 ;
 ;	NOTES:	
 ;		There isn't an explicit option to choose FPMA or FPMB at the moment.
@@ -16,22 +14,16 @@
 ;
 ; EXAMPLE:
 ;		wave = 94
-;		orbit = 1
-;		mos = 10
 ;		nustar_align_tile, reference_file, nustar_file
-;		nustar_align_tile, reference_file, nustar_file, wave=wave, /write		; if you like it, write to file.
 ;
 ; INPUTS:
 ;			reference_file 		This is a map file that want to correct to already
 ;                       nustar_file             NuSTAR map file
 ; KEYWORDS:
-;			wave		Actually, this is required.  AIA wavelength to coalign to.
-;			write		If set, write the resulting plots to file.
 ;			fov			FOV to use in submaps, default 8 arcmin
-;			aia_dir		Where to find the AIA data. Must be Level 1.5 data!
-;			nu_dir		Where to find the NuSTAR sun-corrected event lists.
-;			out_dir		Where to write the plots, if /write is set.
-;			shift_manual	An optional shift put in "by hand" instead of using the cross-correlation.
+;			shift_manual	An optional shift put in "by
+;               			hand" instead of using the cross-correlation. Should have a format of [xoff, yoff]
+;                                       with xoff and yoff in arcseconds.
 ;			log			Plots are on log scale
 ;			levels	Contour levels to use in overplots
 ;		
@@ -48,7 +40,7 @@
 
 PRO	NUSTAR_ALIGN_TILE, ref_file, map_file, $
                            log = log, levels = levels, fov= fov,$
-                           figdir = figdir, datdir= datdir
+                           figdir = figdir, datdir= datdir, shift_manual = shift_manual
 
 procname='nustar_align_tile'
 
@@ -95,13 +87,15 @@ rsub_nu = coreg_map( nu_sub, saia, /rescale, /no_project )
 cube( *, *, 0 ) = rsub_nu.data
 cube( *, *, 1 ) = saia.data
 
-	; Use cross-correlation to find the pixel offsets and create a new NUSTAR map with corrected pointing.
-offsets = get_correl_offsets( cube )
 
-shift = -1. * reform(offsets[*, 1]) 
-;print, shift
-                                ; Here, put in your own offsets if you want, or use the ones from the cross correlation.
-shift = fix( reform(-offsets[*,1])*rsub_nu.dx ) ; Arcseconds
+; If you haven't specified a manual shift, do the cross-correlation here
+IF ~keyword_set(shift_manual) THEN begin
+	; Use cross-correlation to find the pixel offsets and create a new NUSTAR map with corrected pointing.
+   offsets = get_correl_offsets( cube )
+   shift = fix( reform(-offsets[*,1])*rsub_nu.dx ) ; Arcseconds
+ENDIF ELSE BEGIN
+   shift = shift_manual ; Arcseconds
+ENDELSE
 
 save, shift, ref_file, map_file, file = savfile
         

@@ -73,7 +73,9 @@ Table Settings (the following should be checked):
 With the following settings for the Optional observer-table settings:
 
      Date/time format: Calendar only (no Julian days).
-     Time Digits: Fractional Seconds
+     Angle format: Decimal degrees
+     Time Digits: Fractional Seconds 
+
 
 
 You can either download the ephmeris directly from Horizons or copy

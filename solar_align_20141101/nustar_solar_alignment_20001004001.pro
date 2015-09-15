@@ -33,6 +33,7 @@ SETENV, 'NUSTAR_OFFSET_DB='+nustar_path+'/nustar_offset_db.sav'
 .compile $NUSTAR_PATH/nustar_convert_to_solar
 .compile $NUSTAR_PATH/nustar_read_ephem
 .compile $NUSTAR_PATH/nustar_correct_file
+
 .compile $NUSTAR_SSWPATH/nustar_make_map_obj
 .compile $NUSTAR_SSWPATH/gauss_smooth
 .compile $NUSTAR_SSWPATH/nustar_plot_map
@@ -44,9 +45,11 @@ SETENV, 'NUSTAR_OFFSET_DB='+nustar_path+'/nustar_offset_db.sav'
 
 ;;;;; Set the following path and file info to be appropriate to what
 ;;;;; you want to run.
-indir = '/users/bwgref/lif_nustar/sol/data/20001003_Sol_14305_AR2192/20001003001/event_cl'
-infile = 'nu20001003001A06_cl.evt'
-ephem_file = '20141101_ephem.txt'
+indir = '/users/bwgref/lif_nustar/sol/data/20001004_Sol_14345_NP/20001004001/event_cl'
+
+
+infile = 'nu20001004001A06_cl.evt'
+ephem_file = '20141211_ephem.txt'
 seqid = file_basename(file_dirname(indir))
 
 ; Defaults will work fine.
@@ -74,53 +77,57 @@ file_mkdir, figdir
 ; Check to make sure that you have the shell script to run the
 ; pipleine here
 
-;; IF ~file_test('run_products_usrgti.sh') THEN spawn, 'cp '+nustar_path+'/run_products_usrgti.sh .'
-;; nustar_chu2gti, indir+'/'+infile, outdir = gtidir
+IF ~file_test('run_pipe_usrgti.sh') THEN spawn, 'cp '+nustar_path+'/run_pipe_usrgti.sh .'
+nustar_chu2gti, indir+'/'+infile, outdir = gtidir
 
 
 ; Use nupipeline and split off each CHU combination into its own file
 
-;; nustar_split_chufiles,indir, gtidir, evtdir
+nustar_split_chufiles,indir, gtidir, evtdir
 
 
 ; Convert each of these files to heliocentric coordinates
 ; NB: nustar_convert_to_solar has internal checks to make sure that you're 
 ; only converting the files that you want to run.
 
-;; evt_files = file_search(evtdir+'/nu'+seqid+'*06_cl*chu*.evt')
-;; FOR i = 0, n_elements(evt_files) -1 DO nustar_convert_to_solar, evt_files[i], ephem_file
-
+evt_files = file_search(evtdir+'/nu'+seqid+'*06_cl*chu*.evt')
+FOR i = 0, n_elements(evt_files) -1 DO nustar_convert_to_solar, evt_files[i], ephem_file
 
 ; End of non-SSW branch
 
 ; Make a map object for each of the files
 
-;; sunpos_files= file_search(evtdir+'/nu'+seqid+'*sunpos.evt')
-;; FOR i = 0, n_elements(sunpos_files) -1 DO nustar_make_map_obj, sunpos_files[i], mapdir 
+sunpos_files= file_search(evtdir+'/nu'+seqid+'*sunpos.evt')
+FOR i = 0, n_elements(sunpos_files) -1 DO nustar_make_map_obj, sunpos_files[i], mapdir 
+
 
 
 ; Get a reference image and make a map, if you haven't already
 
-;; nustar_get_reference_image, indir+'/'+infile, outdir = datdir, $
-;;                             outfile = ref_file
-
+nustar_get_reference_image, indir+'/'+infile, outdir = datdir, $
+                            outfile = ref_file
 
 ; Align each tile to the reference tile
 
-;; map_files= file_search(mapdir+'/nu'+seqid+'*sunpos_map.fits')
-;; FOR i = 0, n_elements(map_files) -1 DO nustar_align_tile, ref_file, map_files[i],datdir = datdir, figdir = figdir
+map_files= file_search(mapdir+'/nu'+seqid+'*sunpos_map.fits')
+; This is a NP pointing, so set the offsets to be neutral.
+FOR i = 0, n_elements(map_files) -1 DO nustar_align_tile, ref_file,map_files[i],datdir = datdir, figdir = figdir, fov=20, levels = [1, 10, 20, 30, 40], shift_manual = [0, 0]
 
+; Generate the database of offsets:
+;; offset_files= file_search(datdir+'/nu*sunpos_offset.sav')
+;; nustar_offset_dbase_gen, offset_files
 
 
 ; Correct the event files (NO SSW needed!!!!)
 
-;; sunpos_files= file_search(evtdir+'/nu*sunpos.evt')
-;; FOR i = 0, n_elements(sunpos_files) -1 DO nustar_correct_file, sunpos_files[i], datdir = datdir, outdir = evtdir
+sunpos_files= file_search(evtdir+'/nu'+seqid+'*sunpos.evt')
+FOR i = 0, n_elements(sunpos_files) -1 DO nustar_correct_file, sunpos_files[i], datdir = datdir, outdir = evtdir
+
 
 
 ; Make a map object for each of the files
-;; sunpos_files= file_search(evtdir+'/nu*sunpos_corr.evt')
-;; FOR i = 0, n_elements(sunpos_files) -1 DO nustar_make_map_obj, sunpos_files[i], mapdir
+sunpos_files= file_search(evtdir+'/nu'+seqid+'*sunpos_corr.evt')
+FOR i = 0, n_elements(sunpos_files) -1 DO nustar_make_map_obj, sunpos_files[i], mapdir
 
 ; Combine the maps:
 
@@ -128,9 +135,9 @@ file_mkdir, figdir
 ;; combine_file = mapdir+'/nu'+seqid+'_combined_corr_map.fits'
 ;; nustar_combine_maps, mapfiles, outfile = combine_file
 
-;  
-;map_files= file_search(mapdir+'/nu*combined_corr_map.fits')
-;FOR i = 0, n_elements(map_files) -1 DO nustar_plot_map, map_files[i], outdir=figdir
+
+;; map_files= file_search(mapdir+'/nu*combined_corr_map.fits')
+;; FOR i = 0, n_elements(map_files) -1 DO nustar_plot_map, map_files[i], outdir=figdir
 
  
 ;end
