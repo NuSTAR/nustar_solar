@@ -68,12 +68,12 @@ file_mkdir, figdir
 ; Check to make sure that you have the shell script to run the
 ; pipleine here
 
-IF ~file_test('run_pipe_usrgti.sh') THEN spawn, 'cp '+nustar_path+'/run_pipe_usrgti.sh .'
-nustar_chu2gti, indir+'/'+infile, outdir = gtidir
+;; IF ~file_test('run_pipe_usrgti.sh') THEN spawn, 'cp '+nustar_path+'/run_pipe_usrgti.sh .'
+;; nustar_chu2gti, indir+'/'+infile, outdir = gtidir
 
-; Use nupipeline and split off each CHU combination into its own file
+;; ; Use nupipeline and split off each CHU combination into its own file
 
-nustar_split_chufiles,indir, gtidir, evtdir
+;; nustar_split_chufiles,indir, gtidir, evtdir
 
 
 ; Convert each of these files to heliocentric coordinates

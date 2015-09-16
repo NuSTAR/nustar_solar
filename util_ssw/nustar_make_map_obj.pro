@@ -29,6 +29,94 @@ pihigh = (erange[1] - 1.60) /  0.04
 good_events = where(evt.grade EQ 0 AND evt.pi GT pilow AND evt.pi LT pihigh)
 evt = (temporary(evt))[good_events]
 
+
+
+; Get rid of bad pixels
+
+use = intarr(n_elements(evt)) + 1
+IF stregex(evtfile, 'A06', /boolean) THEN BEGIN
+
+
+
+   bad_ones = where(evt.det_id EQ 2 AND evt.rawx EQ 16 AND evt.rawy EQ 5, nfound)
+   IF nfound GT 0 THEN use[bad_ones] = 0
+
+   bad_ones = where(evt.det_id EQ 2 AND evt.rawx EQ 24 AND evt.rawy EQ 22, nfound)
+   IF nfound GT 0 THEN use[bad_ones] = 0
+
+   bad_ones = where(evt.det_id EQ 2 AND evt.rawx EQ 27 AND evt.rawy EQ 6, nfound)
+   IF nfound GT 0 THEN use[bad_ones] = 0
+
+   bad_ones = where(evt.det_id EQ 2 AND evt.rawx EQ 27 AND evt.rawy EQ 21, nfound)
+   IF nfound GT 0 THEN use[bad_ones] = 0
+
+
+
+
+
+   bad_ones = where(evt.det_id EQ 3 AND evt.rawx EQ 12 AND evt.rawy EQ 0, nfound)
+   IF nfound GT 0 THEN use[bad_ones] = 0
+
+   bad_ones = where(evt.det_id EQ 3 AND evt.rawx EQ 22 AND evt.rawy EQ 1, nfound)
+   IF nfound GT 0 THEN use[bad_ones] = 0
+
+   bad_ones = where(evt.det_id EQ 3 AND evt.rawx EQ 15 AND evt.rawy EQ 3, nfound)
+   IF nfound GT 0 THEN use[bad_ones] = 0
+   
+   bad_ones = where(evt.det_id EQ 3 AND evt.rawx EQ 5 AND evt.rawy EQ 5, nfound)
+   IF nfound GT 0 THEN use[bad_ones] = 0
+
+   bad_ones = where(evt.det_id EQ 3 AND evt.rawx EQ 22 AND evt.rawy EQ 7, nfound)
+   IF nfound GT 0 THEN use[bad_ones] = 0
+
+   bad_ones = where(evt.det_id EQ 3 AND evt.rawx EQ 16 AND evt.rawy EQ 11, nfound)
+   IF nfound GT 0 THEN use[bad_ones] = 0
+
+   bad_ones = where(evt.det_id EQ 3 AND evt.rawx EQ 18 AND evt.rawy EQ 3, nfound)
+   IF nfound GT 0 THEN use[bad_ones] = 0
+
+   bad_ones = where(evt.det_id EQ 3 AND evt.rawx EQ 24 AND evt.rawy EQ 4, nfound)
+   IF nfound GT 0 THEN use[bad_ones] = 0
+
+   bad_ones = where(evt.det_id EQ 3 AND evt.rawx EQ 25 AND evt.rawy EQ 5, nfound)
+   IF nfound GT 0 THEN use[bad_ones] = 0
+
+   good_events = where(use EQ 1)
+   evt = (temporary(evt))[good_events]
+
+   ;; FOR d = 0, 3 DO BEGIN
+   ;;    det = where(evt.det_id EQ d)
+   ;;    im = hist_2d(evt[det].rawx, evt[det].rawy, min1 = 0, max1 = 31, min2 = 0, max2 = 31)
+   ;;    plot, im
+   ;;    stop
+   ;; ENDFOR
+
+
+
+   ;; stop
+
+ENDIF ELSE BEGIN
+   bad_ones = where(evt.det_id EQ 0 AND evt.rawx EQ 24 AND evt.rawy EQ 24, nfound)
+   IF nfound GT 0 THEN use[bad_ones] = 0
+
+   ;; FOR d = 0, 3 DO BEGIN
+   ;;    det = where(evt.det_id EQ d)
+   ;;    im = hist_2d(evt[det].rawx, evt[det].rawy, min1 = 0, max1 = 31, min2 = 0, max2 = 31)
+   ;;    plot, im
+   ;;    stop
+   ;; ENDFOR
+
+   good_events = where(use EQ 1)
+   evt = (temporary(evt))[good_events]
+
+
+endelse
+   
+                  
+   
+
+
+
 ; Get the astrometric info from the FITS headers
 
 ttype = where(stregex(evthdr, "TTYPE", /boolean))

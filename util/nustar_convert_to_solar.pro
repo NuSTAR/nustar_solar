@@ -97,12 +97,14 @@ evt.y = (dys / dely) + y0
 ;;; APPLY CORRECTIONS HERE ;;;;;
 
 
-IF keyword_set(correct_apsect) THEN BEGIN
+IF keyword_set(correct_aspect) THEN BEGIN
    shift = nustar_get_offset(evtfile)
 ENDIF ELSE shift = [0, 0]
 
-evt.x += shift[0]
-evt.y += shift[1]
+;;print, 'Shift is: ', shift
+
+evt.x += shift[0] / delx
+evt.y += shift[1] / dely
 
 
 ; Adjust astrometry headers
