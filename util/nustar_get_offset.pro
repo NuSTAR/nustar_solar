@@ -26,10 +26,14 @@ FUNCTION nustar_get_offset, infile
    openr, lun, offset_file, /get_lun
    input = 'string'
    readf, lun, input
-   close, lun, lun
+   close, lun
+   free_lun, lun
+
    fields = strsplit(input, ' ' , /extract)
 
    offset = [fix(fields[0]), fix(fields[1])]
    return, offset
+
+
 
 END
