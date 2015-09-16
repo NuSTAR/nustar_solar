@@ -14,9 +14,15 @@ IF ~stregex(!path, 'nustar_solar/util', /boolean) THEN $
    !path = expand_path('+'+nustar_path)+':'+ $
            !path
 
+; And the ssw_util path
+nustar_ssw_path= '/disk/lif2/bwgref/git/nustar_solar/util_ssw/'
+IF ~stregex(!path, 'nustar_solar/util_ssw', /boolean) THEN $
+   !path = expand_path('+'+nustar_ssw_path)+':'+ $
+           !path
 
 ; Set the location of the database of offsets that you'll use below.
 
+SETENV, 'NUSTAR_SSWPATH='+nustar_ssw_path
 SETENV, 'NUSTAR_PATH='+nustar_path
 SETENV, 'NUSTAR_OFFSET_DB='+nustar_path+'/nustar_offset_db.sav'
 
@@ -31,8 +37,8 @@ SETENV, 'NUSTAR_OFFSET_DB='+nustar_path+'/nustar_offset_db.sav'
 
 ;;;;; Set the following path and file info to be appropriate to what
 ;;;;; you want to run.
-indir = '/users/bwgref/lif_nustar/sol/data/20001003_Sol_14305_AR2192/20001003001/event_cl'
-infile = 'nu20001003001A06_cl.evt'
+indir = '/users/bwgref/lif_nustar/sol/data/20012002_Sol_14305_AR2192_2/20012002001/event_cl'
+infile = 'nu20012002001A06_cl.evt'
 ephem_file = '20141101_ephem.txt'
 seqid = file_basename(file_dirname(indir))
 
@@ -64,22 +70,18 @@ file_mkdir, figdir
 ;; IF ~file_test('run_pipe_usrgti.sh') THEN spawn, 'cp '+nustar_path+'/run_pipe_usrgti.sh .'
 ;; nustar_chu2gti, indir+'/'+infile, outdir = gtidir
 
+
 ; Use nupipeline and split off each CHU combination into its own file
 
-;; nustar_split_chufiles,indir, gtidir, evtdir
+;;  nustar_split_chufiles,indir, gtidir, evtdir
 
 
 ; Convert each of these files to heliocentric coordinates
 ; NB: nustar_convert_to_solar has internal checks to make sure that you're 
 ; only converting the files that you want to run.
 
-
 evt_files = file_search(evtdir+'/nu'+seqid+'*06_cl*chu*.evt')
-FOR i = 0, n_elements(evt_files) -1 DO nustar_convert_to_solar,evt_files[i], ephem_file, /correct_aspect
-
-
-
-
+FOR i = 0, n_elements(evt_files) -1 DO nustar_convert_to_solar, evt_files[i], ephem_file, /correct_aspect
  
 ;end
 
