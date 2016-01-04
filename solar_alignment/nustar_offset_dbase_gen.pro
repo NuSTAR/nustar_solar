@@ -46,8 +46,8 @@ PRO nustar_offset_dbase_gen, $
      fpm = 'FPM'+strmid(offset_files[i], 13+strpos(offset_files[i], 'nu'), 1)    
                                 ; Load the offset file
      restore, offset_files[i]
-     xoff = string(shift[0], format = '(i0)')
-     yoff = string(shift[1], format = '(i0)')
+     xoff = string(-1*shift[0], format = '(i0)')
+     yoff = string(-1*shift[1], format = '(i0)')
      
                                 ; Get the date info out of the file header
      hdr = headfits(map_file)

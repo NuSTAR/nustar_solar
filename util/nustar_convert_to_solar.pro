@@ -1,17 +1,18 @@
 ; Code that converts data to heliophysics coordinates.
-; Eventually should figure out what correction to use based on some
-; input databse file.
-pro nustar_convert_to_solar, evtfile, ephem_file
-procname = 'nustar_convert_to_solar'
 
+; If the /correct_apsect option is given then the code automatically
+; adjusts the pointing based on the offsets stored in the offset_files
+; directory tree for this observation and CHU combination.
+
+pro nustar_convert_to_solar, evtfile, ephem_file, $
+                             correct_aspect = correct_aspect
+procname = 'nustar_convert_to_solar'
 
 IF stregex(evtfile, 'sunpos', /boolean) THEN BEGIN
    print, procname+': File already converted, skipping: '+evtfile
    return
 endif
 
-; forward_function read_ephem
-;evtfile = getenv('convert_to_solar_file')
 
 ephem = nustar_read_ephem(ephem_file)
 
@@ -54,9 +55,6 @@ xr = ra0 + (evt.x - x0)*delx/cos(dec0/180.0d0*!dpi) ; imperfect correction for c
 tmjd = convert_nustar_time(evt.time, /mjd)
 
 
-
-
-
 nustar_time = convert_nustar_time(ephem.time, /from_ut)
 
 
@@ -79,7 +77,7 @@ dy =  (yd - ys)*3600.0d0
 dxs = dx * cos(p0) + dy * sin(p0)
 dys = dy * cos(p0) - dx * sin(p0)
 
-                                ; Apply fiducial offsets in Solar frame (N is Up, West is right)
+
 
    ; change to 0-3000 pixels:
 maxX = 3000
@@ -91,11 +89,22 @@ delx = delx * 3600. ; switch from West = left to West = right
 
 
 ; Negative sign switches to +X = West = Right instead of +X = East = Left
+
 evt.x = -(dxs / delx) + x0 
 evt.y = (dys / dely) + y0
 
 
 ;;; APPLY CORRECTIONS HERE ;;;;;
+
+
+IF keyword_set(correct_aspect) THEN BEGIN
+   shift = nustar_get_offset(evtfile)
+ENDIF ELSE shift = [0, 0]
+
+;;print, 'Shift is: ', shift
+
+evt.x += shift[0] / delx
+evt.y += shift[1] / dely
 
 
 ; Adjust astrometry headers

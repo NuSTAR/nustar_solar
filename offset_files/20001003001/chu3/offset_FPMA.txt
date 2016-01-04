@@ -1,1 +1,1 @@
--20  57  20001003001  chu3  FPMA  2014-11-01T19:00:32.000  ./dat/nu20001003001A06_cl_ref_map.fits  maps/nu20001003001A06_cl_chu3_sunpos_map.fits
+20  -57  20001003001  chu3  FPMA  2014-11-01T19:00:32.000  ./dat/nu20001003001A06_cl_ref_map.fits  maps/nu20001003001A06_cl_chu3_sunpos_map.fits

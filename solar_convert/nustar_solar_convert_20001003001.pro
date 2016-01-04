@@ -27,6 +27,7 @@ SETENV, 'NUSTAR_OFFSET_DB='+nustar_path+'/nustar_offset_db.sav'
 .compile $NUSTAR_PATH/nustar_convert_to_solar
 .compile $NUSTAR_PATH/nustar_read_ephem
 .compile $NUSTAR_PATH/nustar_correct_file
+.compile $NUSTAR_PATH/nustar_get_offset
 
 ;;;;; Set the following path and file info to be appropriate to what
 ;;;;; you want to run.
@@ -60,9 +61,8 @@ file_mkdir, figdir
 ; Check to make sure that you have the shell script to run the
 ; pipleine here
 
-;; IF ~file_test('run_products_usrgti.sh') THEN spawn, 'cp '+nustar_path+'/run_products_usrgti.sh .'
+;; IF ~file_test('run_pipe_usrgti.sh') THEN spawn, 'cp '+nustar_path+'/run_pipe_usrgti.sh .'
 ;; nustar_chu2gti, indir+'/'+infile, outdir = gtidir
-
 
 ; Use nupipeline and split off each CHU combination into its own file
 
@@ -73,13 +73,11 @@ file_mkdir, figdir
 ; NB: nustar_convert_to_solar has internal checks to make sure that you're 
 ; only converting the files that you want to run.
 
-;; evt_files = file_search(evtdir+'/nu*06_cl*chu*.evt')
-;; FOR i = 0, n_elements(evt_files) -1 DO nustar_convert_to_solar, evt_files[i], ephem_file
 
-; Correct the event files 
+evt_files = file_search(evtdir+'/nu'+seqid+'*06_cl*chu*.evt')
+FOR i = 0, n_elements(evt_files) -1 DO nustar_convert_to_solar,evt_files[i], ephem_file, /correct_aspect
 
-;; sunpos_files= file_search(evtdir+'/nu*sunpos.evt')
-;; FOR i = 0, n_elements(sunpos_files) -1 DO nustar_correct_file, sunpos_files[i], datdir = datdir, outdir = evtdir
+
 
 
  

@@ -15,10 +15,11 @@ IF ~stregex(!path, 'nustar_solar/util', /boolean) THEN $
            !path
 
 ; Compile code that you're going to use below
-.run nustar_split_chufiles
-.run nustar_convert_to_solar
-.run nustar_read_ephem
-.run nustar_correct_file
+.compile nustar_split_chufiles
+.compile nustar_convert_to_solar
+.compile nustar_read_ephem
+.compile nustar_correct_file
+.compile nustar_get_offset
 
 ;;;;; Set the following path and file info to be appropriate to what
 ;;;;; you want to run.
@@ -39,7 +40,6 @@ file_mkdir, datdir
 file_mkdir, gtidir
 file_mkdir, evtdir
 file_mkdir, figdir
-
 
 ; NB: infile is only used for reference here to generate the GTIs. All of
 ; the downstream work is done using bespoke event files.

@@ -1,5 +1,5 @@
 PRO nustar_correct_file, infile, datdir = datdir, outdir = outdir
-procname = 'nustar_correct_file
+procname = 'nustar_correct_file'
 
 IF ~keyword_set(datdir) THEN datdir = './dat'
 IF ~keyword_set(outdir) THEN outdir = './evt'  
