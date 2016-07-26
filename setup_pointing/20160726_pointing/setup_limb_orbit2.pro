@@ -1,12 +1,12 @@
-pro setup_pointing_orbit1
+pro setup_limb_orbit2
 
                                 ; Orbit 1 start:
 
-  tstart_orb1 = '2016-01-05T14:01:00'
-  tend_orb1 = '2016-01-05T15:04:10'
+  tstart_orb1 = '2016-07-26T20:58:50'
+  tend_orb1 = '2016-07-26T22:01:00'
 
-  outstem = '20160105'
-  suffix='orbit1'
+  outstem = '20160726'
+  suffix='limb_orbit2'
   tstart_sec = convert_nustar_time(tstart_orb1, /from_ut)
   tend_sec = convert_nustar_time(tend_orb1, /from_ut)
 
@@ -15,7 +15,6 @@ pro setup_pointing_orbit1
 ;  dwell = double((tend_sec - tstart_sec))
 
   print, 'Time per tile: ',  dwell
-
 
   tstart_jd = convert_nustar_time(tstart_orb1, /from_ut, /mjd) + 2400000.5
 
@@ -26,11 +25,14 @@ pro setup_pointing_orbit1
 ;  dwell = double(220.)          ; seconds
   dwell /= 86400.               ; days
   aim_times = dindgen(tiles) * dwell + tstart_jd[0] + dwell * 0.5
-
-  print, 'Time for last dwell: ', convert_nustar_time(max(aim_times) - 2400000.5+dwell, /from_mjd, /ut)
+;  aim_times = [tstart_jd[0], aim_times, tstart_jd[0] + dwell]
+  
+;  print, 'Time for last dwell: ', convert_nustar_time(max(aim_times) - 2400000.5, /from_mjd, /ut)
   for i = 0, n_elements(aim_times) -1 do $ 
      print, 'Aim times for last dwell: ', convert_nustar_time(aim_times[i] - 2400000.5, /from_mjd, /ut)
 
+
+  
 
    
   sun_ra = interpol(ephem.ra, ephem.jd, aim_times)
@@ -39,37 +41,26 @@ pro setup_pointing_orbit1
 
 
 
-  
-  
-  xsteps = findgen(tiles) mod 4 - 1.5
-  xsteps = [-1.5, -0.5, 0.5, 1.5]
 
-  xsteps = [xsteps, reverse(xsteps), xsteps, reverse(xsteps)]
-  ysteps = floor(findgen(16) / 4) - 1.5 
 
-;  xsteps = [xsteps, 0]
-;  ysteps = [ysteps, 0]
-
-  
-
-  pa = (sun_pa) mod 360
                                 ; Roll angle to get "diamond" shape
+  print, 'Celestial Sun NP angle: ', sun_pa
+  print, 'Sun NP angle for ds9: ', (sun_pa+90) mod 360  
 
-
-  box_pa = pa
-  pa = box_pa + 45 ; Offset to get the steps in the right direction
-
-  print, 'Box PA angle:', box_pa[0]
+  box_pa = (sun_pa+ 90) mod 360 
+  print, 'Box roll angle wrt celestial north: ', box_pa
   
-  delx = xsteps * cos(pa * !dtor) - ysteps * sin(pa*!dtor)
-  dely = xsteps * sin(pa * !dtor) + ysteps * cos(pa*!dtor)
 
-                                ; Make the step size be ~10 arcminutes
-;  delx *= (10. / 60.)
-;  dely *= (10. / 60.)
+  ; From David:
+  xsteps = -1000.d 
+  ysteps = 150.d
 
-  delx = -1100.d ; arcseconds
-  dely = -530.d ; arcseconds
+
+  ; CCW rotation to go from heliocentric to celestial:
+  delx = xsteps * cos(sun_pa * !dtor) + ysteps * sin(sun_pa*!dtor)
+  dely = -xsteps * sin(sun_pa * !dtor) + ysteps * cos(sun_pa*!dtor)
+
+   
   delx /= 3600
   dely /= 3600
 
@@ -90,11 +81,11 @@ pro setup_pointing_orbit1
 
 
 ;     box(22:53:45.512,-7:05:41.18,720",720",113)
-
-     printf, lun, 'box('+ $
-             string(point_ra[i], format ='(d10.4)')+','+$
-             string(point_dec[i],  format ='(d10.4)')+','+$
-             '720", 720", '+string(box_pa[i], format = '(d0.0)')+')'
+     if i eq 1 then $
+        printf, lun, 'box('+ $
+                string(point_ra[i], format ='(d10.4)')+','+$
+                string(point_dec[i],  format ='(d10.4)')+','+$
+                '720", 720", '+string(box_pa[i], format = '(d0.0)')+')'
   ;; endfo
   ;; close, lun
   ;; free_lun, lun
@@ -129,12 +120,12 @@ pro setup_pointing_orbit1
 
 
 ;     box(22:53:45.512,-7:05:41.18,720",720",113)
+;     if i eq 1 then $
+        printf, lun, 'box('+ $
+                string(point_ra[i], format ='(d10.4)')+','+$
+                string(point_dec[i],  format ='(d10.4)')+','+$
+                '720", 720", '+string(box_pa[i], format = '(d0.0)')+')'
      
-     printf, lun, 'box('+ $
-             string(point_ra[i], format ='(d10.4)')+','+$
-             string(point_dec[i],  format ='(d10.4)')+','+$
-             '720", 720", '+string(box_pa[i], format = '(d0.0)')+')'
-
 ;     close, lun
 ;     free_lun, lun
   
