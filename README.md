@@ -8,26 +8,29 @@ Requirements:
   numpy
   sunpy
 
-Reccomend using [conda](https://www.continuum.io/downloads) for installation of astropy/numpy.
+We recommend using [Anaconda](https://www.continuum.io/downloads) for installation of astropy/numpy/everything else via conda.
 
-See the sunpy documentation on how to install sunpy via conda.
+See the [sunpy documenation](http://sunpy.org)how to install sunpy via conda.
 
 
+# Contents: 
 
-Contents: 
-
-setup_pointing:
+### setup_pointing:
 
 Contains a jupyter notebook that demonstrates how to generate a pointing location and *NuSTAR* roll for a given observation. 
 
-solar_convert:
+### solar_convert:
 
+Work in progress. Empty. Will eventually contain the code to convert the solar observations into heliophysics coordinates.
 
+### solar_analysis:
 
-offset_files:
+Empty. Will probably contain sunpy specific (or [SolarSoft](http://www.lmsal.com/solarsoft/) equivalent) code for making maps, interfacing with other observatories, etc.
 
-Directory tree that contains the offets for each of the sequence IDs
-and CHU combinations. Produced by the code in solar_alignment.
+### offset_files:
+
+Directory tree that contains the offets for each of the sequence IDs and CHU combinations. This (may?) be updated as we get better alignment between NuSTAR and other missions. Note that the NuSTAR absolute reconstruction is usually only good to an arcminute or so for solar observations.
+
 
 
 
