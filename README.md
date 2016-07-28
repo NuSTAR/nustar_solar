@@ -1,9 +1,17 @@
 # Nustar Solar Repo
-Scripts for converting *NuSTAR* solar observations to usable heliocentric coordinates.
 
-This branch uses python scripts rather than IDL scripts. This is currently work in progress.
+## Overview:
 
-Requirements:
+**This is currently work in progress.**
+
+This repo contains scripts for converting *NuSTAR* solar observations to usable heliocentric coordinates.
+
+This branch uses python-based code rather than IDL scripts so that we can take advantage of the wonderful open source developments in astropy and sunpy.
+
+All python scripts shown here are written for python 3.5.
+
+
+Library Requirements (at minimum, and with their dependencies):
   astopy
   numpy
   sunpy
@@ -12,8 +20,7 @@ We recommend using [Anaconda](https://www.continuum.io/downloads) for installati
 
 See the [sunpy documenation](http://sunpy.org)how to install sunpy via conda.
 
-
-# Contents: 
+## Contents: 
 
 ### setup_pointing:
 
