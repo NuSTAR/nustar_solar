@@ -163,8 +163,3 @@ print("NuSTAR Sky PA: ",nustar_roll)
     Coordinates [ 126.04053869   19.33666449] deg
     NuSTAR Sky PA:  98.8658844320891 deg
 
-
-
-```python
-
-```
