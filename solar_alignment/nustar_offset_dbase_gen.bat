@@ -1,3 +1,0 @@
-.compile nustar_offset_dbase_gen
-
-nustar_offset_dbase_gen
