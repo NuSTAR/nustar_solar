@@ -10,7 +10,6 @@ This branch uses python-based code rather than IDL scripts so that we can take a
 
 All python scripts shown here are written for python 3.5.
 
-
 Library Requirements (at minimum, and with their dependencies):
   astopy
   numpy
@@ -18,7 +17,7 @@ Library Requirements (at minimum, and with their dependencies):
 
 We recommend using [Anaconda](https://www.continuum.io/downloads) for installation of astropy/numpy/everything else via conda.
 
-See the [sunpy documenation](http://sunpy.org)how to install sunpy via conda.
+See the [sunpy documenation](http://sunpy.org) for details of how to install sunpy via conda.
 
 ## Contents: 
 
