@@ -1,3 +1,5 @@
+# Note: Probably won't be maintained after 2016/08/01. Moving to the python version of the code instead.
+
 # nustar_solar
 Scripts for converting NuSTAR solar observations to usable heliocentric coordinates.
 
